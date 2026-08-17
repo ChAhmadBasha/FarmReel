@@ -1,0 +1,23 @@
+<UserControl x:Class="FarmReel.App.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Dashboard" FontSize="16" FontWeight="Bold" Margin="0,0,0,8"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Header="Recent activity">
+                <DataGrid ItemsSource="{Binding RecentLogs}" DisplayMemberPath="DisplayLine"/>
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="Accounts" Margin="8,0,0,0">
+                <DataGrid ItemsSource="{Binding Accounts}" SelectionMode="Single"/>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</UserControl>

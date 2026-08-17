@@ -1,0 +1,11 @@
+<UserControl x:Class="FarmReel.App.Views.TemplatesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel Margin="4">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Content="New Template" Click="Add_Click"/>
+            <Button Content="Delete" Click="Delete_Click"/>
+        </StackPanel>
+        <DataGrid x:Name="Grid" ItemsSource="{Binding Templates}" SelectionMode="Single"/>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,24 @@
+<UserControl x:Class="FarmReel.App.Views.GroupsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel Margin="4">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Content="Add Group" Click="Add_Click"/>
+            <Button Content="Delete Group" Click="Delete_Click"/>
+            <Button Content="Assign Selected Device to Group" Click="Assign_Click"/>
+            <Button Content="Backup Groups" Click="Backup_Click"/>
+        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Header="LD groups">
+                <DataGrid x:Name="GroupGrid" ItemsSource="{Binding Groups}"/>
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="Devices" Margin="8,0,0,0">
+                <DataGrid x:Name="DeviceGrid" ItemsSource="{Binding Devices}"/>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
+</UserControl>

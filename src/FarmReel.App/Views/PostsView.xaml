@@ -1,0 +1,37 @@
+<UserControl x:Class="FarmReel.App.Views.PostsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel Margin="4">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Content="Add Post Job" Click="Add_Click"/>
+            <Button Content="Edit Selected" Click="Edit_Click"/>
+            <Button Content="Toggle" Click="Toggle_Click"/>
+            <Button Content="Reset State" Click="Reset_Click"/>
+            <Button Content="Delete" Click="Delete_Click"/>
+            <Button Content="Run Now" Click="Run_Click"/>
+            <Button Content="Run All Enabled" Click="RunAll_Click"/>
+            <Button Content="Scan Folder..." Click="Scan_Click"/>
+            <Button Content="Check Video..." Click="CheckVideo_Click"/>
+            <Button Content="Save As Template" Click="SaveTemplate_Click"/>
+            <Button Content="Apply Template" Click="ApplyTemplate_Click"/>
+            <TextBlock Text="Add Task:" VerticalAlignment="Center" Margin="12,0,0,0"/>
+            <TextBox x:Name="TaskName" Width="90"/>
+            <TextBox x:Name="TaskCron" Width="80" ToolTip="HH:mm or sun,mon 09:00"/>
+            <Button Content="+" Click="AddTask_Click"/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4,0,4">
+            <TextBlock Text="Filter jobs:" VerticalAlignment="Center"/>
+            <TextBox x:Name="FilterBox" Width="220" TextChanged="Filter_Changed"/>
+        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="Grid" ItemsSource="{Binding Jobs}" SelectionMode="Single"/>
+            <GroupBox Grid.Column="1" Header="Scheduled tasks" Margin="4">
+                <DataGrid x:Name="TaskGrid" ItemsSource="{Binding Tasks}"/>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
+</UserControl>

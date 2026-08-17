@@ -1,0 +1,18 @@
+# Build output
+bin/
+obj/
+dist/
+*.user
+*.suo
+
+# Local data (never commit account data)
+*.db
+*.db-wal
+*.db-shm
+*.log
+*.ovpn
+*.apk
+
+# IDE
+.vs/
+.idea/

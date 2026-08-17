@@ -1,0 +1,14 @@
+<UserControl x:Class="FarmReel.App.Views.ActiveView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel Margin="4">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Content="Add Active Job" Click="Add_Click"/>
+            <Button Content="Delete" Click="Delete_Click"/>
+            <Button Content="Run Now" Click="Run_Click"/>
+            <Button Content="Reset State" Click="Reset_Click"/>
+            <Button Content="Edit Limits" Click="Edit_Click"/>
+        </StackPanel>
+        <DataGrid x:Name="Grid" ItemsSource="{Binding Jobs}" SelectionMode="Single"/>
+    </DockPanel>
+</UserControl>

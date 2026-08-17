@@ -1,0 +1,23 @@
+<UserControl x:Class="FarmReel.App.Views.PagesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel Margin="4">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Content="Add Page" Click="Add_Click"/>
+            <Button Content="Delete" Click="Delete_Click"/>
+            <Button Content="Pull Dashboard" Click="Dashboard_Click"/>
+            <Button Content="Check Monetization" Click="Monetization_Click"/>
+            <Button Content="Delete All Posts" Click="DeletePosts_Click"/>
+            <Button Content="Share Post" Click="Share_Click"/>
+            <Button Content="Join Group" Click="JoinGroup_Click"/>
+            <Button Content="Set Page Info" Click="SetInfo_Click"/>
+            <Button Content="Auto-Delete Copyright" Click="Copyright_Click"/>
+            <Button Content="Bulk Edit..." Click="BulkEdit_Click"/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4,0,4">
+            <TextBlock Text="Filter:" VerticalAlignment="Center"/>
+            <TextBox x:Name="FilterBox" Width="220" TextChanged="Filter_Changed"/>
+        </StackPanel>
+        <DataGrid x:Name="Grid" ItemsSource="{Binding Pages}" SelectionMode="Extended"/>
+    </DockPanel>
+</UserControl>

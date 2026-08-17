@@ -1,0 +1,12 @@
+<UserControl x:Class="FarmReel.App.Views.EmailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel Margin="4">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Content="Add Email" Click="Add_Click"/>
+            <Button Content="Delete" Click="Delete_Click"/>
+            <Button Content="Test Get Code" Click="Test_Click"/>
+        </StackPanel>
+        <DataGrid x:Name="Grid" ItemsSource="{Binding Emails}" SelectionMode="Single"/>
+    </DockPanel>
+</UserControl>

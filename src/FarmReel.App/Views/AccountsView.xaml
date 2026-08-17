@@ -1,0 +1,43 @@
+<UserControl x:Class="FarmReel.App.Views.AccountsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel Margin="4">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Content="Add Account" Click="Add_Click"/>
+            <Button Content="Delete" Click="Delete_Click"/>
+            <Button Content="Import..." Click="Import_Click"/>
+            <Button Content="Check Live" Click="Live_Click"/>
+            <Button Content="All Live" Click="LiveAll_Click"/>
+            <Button Content="Login" Click="Login_Click"/>
+            <Button Content="Manual Login" Click="ManualLogin_Click"/>
+            <Button Content="Manual Backup" Click="ManualBackup_Click"/>
+            <Button Content="Copy 2FA" Click="Copy2Fa_Click"/>
+            <Button Content="Set 2FA" Click="Set2Fa_Click"/>
+            <Button Content="Appeal" Click="Appeal_Click"/>
+            <Button Content="Unlock 282" Click="Unlock_Click"/>
+            <Button Content="Create Page" Click="CreatePage_Click"/>
+            <Button Content="Pro Mode" Click="ProMode_Click"/>
+            <Button Content="Add Friend" Click="Friend_Click"/>
+            <Button Content="Confirm Friends" Click="ConfirmFriends_Click"/>
+            <Button Content="Join Group" Click="JoinGroup_Click"/>
+            <Button Content="Leave Group" Click="LeaveGroup_Click"/>
+            <Button Content="Group Ideas" Click="GroupSuggest_Click"/>
+            <Button Content="Post to Group" Click="PostToGroup_Click"/>
+            <Button Content="Share Post" Click="Share_Click"/>
+            <Button Content="Check-In" Click="CheckIn_Click"/>
+            <Button Content="Story" Click="Story_Click"/>
+            <Button Content="Watch Live" Click="Live_Click2"/>
+            <Button Content="View Story" Click="ViewStory_Click"/>
+            <Button Content="Notifications" Click="Notif_Click"/>
+            <Button Content="Review Page" Click="Review_Click"/>
+            <Button Content="Primary Location" Click="Location_Click"/>
+            <Button Content="Create IG" Click="Ig_Click"/>
+            <Button Content="Pull Names" Click="PullNames_Click"/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4,0,4">
+            <TextBlock Text="Filter:" VerticalAlignment="Center"/>
+            <TextBox x:Name="FilterBox" Width="220" TextChanged="Filter_Changed"/>
+        </StackPanel>
+        <DataGrid x:Name="Grid" ItemsSource="{Binding Accounts}" SelectionMode="Single"/>
+    </DockPanel>
+</UserControl>

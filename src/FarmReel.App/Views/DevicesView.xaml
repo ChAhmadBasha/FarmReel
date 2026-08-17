@@ -1,0 +1,36 @@
+<UserControl x:Class="FarmReel.App.Views.DevicesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel Margin="4">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Button Content="Add LDPlayer" Click="AddLd_Click"/>
+            <Button Content="Add MuMu" Click="AddMuMu_Click"/>
+            <Button Content="Add Real Phone" Click="AddPhone_Click"/>
+            <Button Content="Delete Selected" Click="Delete_Click"/>
+            <Button Content="Scan ADB" Click="Scan_Click"/>
+            <Button Content="Start" Click="Start_Click"/>
+            <Button Content="Stop" Click="Stop_Click"/>
+            <Button Content="Gen Fingerprint" Click="Fingerprint_Click"/>
+            <Button Content="Sync GPS/TZ" Click="SyncGps_Click"/>
+            <Button Content="Time Change..." Click="TimeChange_Click"/>
+            <Button Content="Clear FB Data" Click="ClearFb_Click"/>
+            <Button Content="Bridge On" Click="BridgeOn_Click"/>
+            <Button Content="Bridge Off" Click="BridgeOff_Click"/>
+            <Button Content="Arrange" Click="Arrange_Click"/>
+            <Button Content="Install APK..." Click="InstallApk_Click"/>
+            <Button Content="Import VPN..." Click="ImportVpn_Click"/>
+            <Button Content="Copy LD..." Click="CopyLd_Click"/>
+            <Button Content="Remove LD..." Click="RemoveLd_Click"/>
+            <Button Content="Backup LD..." Click="BackupLd_Click"/>
+            <Button Content="Restore LD..." Click="RestoreLd_Click"/>
+            <Button Content="Manifest..." Click="Backup_Click"/>
+            <TextBlock Text="Columns:" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <TextBox x:Name="ColumnsBox" Text="3" Width="36"/>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,4,0,4">
+            <TextBlock Text="Filter:" VerticalAlignment="Center"/>
+            <TextBox x:Name="FilterBox" Width="220" TextChanged="Filter_Changed"/>
+        </StackPanel>
+        <DataGrid x:Name="Grid" ItemsSource="{Binding Devices}" SelectionMode="Single"/>
+    </DockPanel>
+</UserControl>

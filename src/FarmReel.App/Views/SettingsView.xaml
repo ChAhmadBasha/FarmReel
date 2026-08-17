@@ -1,0 +1,109 @@
+<UserControl x:Class="FarmReel.App.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="8">
+            <GroupBox Header="Emulator paths">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="LDPlayer console:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding LdConsolePath}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="MuMuManager:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding MuMuManagerPath}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="adb:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AdbPath}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="OpenVPN:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding OpenVpnPath}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="ffprobe/ffmpeg:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding FfprobePath}"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Runtime" Margin="0,8,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions><RowDefinition/><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Max active LD:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding MaxActiveLd}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Wait after LD boot (s):" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding WaitAfterLdBootSec}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Between LD start (s):" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding WaitBetweenLdStartSec}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="After upload (s):" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding WaitAfterUploadSec}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Auto stop at (HH:mm):" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AutoStopAt}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="Clear cache every N runs:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding ClearCacheEveryRuns}"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Behavior" Margin="0,8,0,0">
+                <StackPanel>
+                    <CheckBox Content="Skip offline devices (mark job 'skipped' instead of failed)" IsChecked="{Binding SkipOfflineDevices}"/>
+                    <CheckBox Content="Move posted files to .posted / .failed folders" IsChecked="{Binding MoveAfterPost}"/>
+                    <CheckBox Content="Shut down PC after all work finishes" IsChecked="{Binding ShutdownAfterFinish}"/>
+                    <CheckBox Content="Backup database daily" IsChecked="{Binding AutoBackupDb}"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                        <TextBlock Text="Instagram package:" VerticalAlignment="Center" Width="140"/>
+                        <TextBox Text="{Binding InstagramPackage}" Width="220"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Services & license" Margin="0,8,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="2Captcha API key:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CaptchaApiKey}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="SMS API key:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SmsApiKey}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="AI API key:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AiApiKey}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="AI base URL:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding AiBaseUrl}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="AI model:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding AiModel}"/>
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="License key:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding LicenseKey}"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="License server (optional):" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding LicenseServer}"/>
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="{Binding LicensePlan}" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal">
+                        <TextBlock Text="Time change keys left: " VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding LicenseKeysLeft}" VerticalAlignment="Center"/>
+                        <TextBlock Text=" | Reg Full: " VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding RegFull}" VerticalAlignment="Center"/>
+                        <TextBlock Text=" | Novery: " VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Novery}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Button Content="Save Settings" Click="Save_Click" FontWeight="Bold"/>
+                <Button Content="Activate License" Click="Activate_Click"/>
+                <Button Content="Check AI" Click="CheckAi_Click"/>
+                <Button Content="Backup Now" Click="Backup_Click"/>
+                <Button Content="Check Environment" Click="Env_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
