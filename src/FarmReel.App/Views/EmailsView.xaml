@@ -6,6 +6,8 @@
             <Button Content="Add Email" Click="Add_Click"/>
             <Button Content="Delete" Click="Delete_Click"/>
             <Button Content="Test Get Code" Click="Test_Click"/>
+            <Button Content="Fetch Stock" Click="Stock_Click"/>
+            <Button Content="Order from Stock..." Click="Order_Click"/>
         </StackPanel>
         <DataGrid x:Name="Grid" ItemsSource="{Binding Emails}" SelectionMode="Single"/>
     </DockPanel>

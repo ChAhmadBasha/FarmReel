@@ -166,12 +166,13 @@ namespace FarmReel.App.ViewModels
 
         // ---- Time Change Key (metered device-time spoofing) ----
 
-        public bool ChangeDeviceTime(DeviceRow row, int hoursOffset)
+        public async Task<bool> ChangeDeviceTimeAsync(DeviceRow row, int hoursOffset)
         {
             if (row == null) return false;
-            if (!_svc.License.ConsumeTimeChangeKey())
+            var (ok, remaining) = await _svc.License.ConsumeTimeChangeKeyAsync().ConfigureAwait(false);
+            if (!ok)
             {
-                Log.Warn("Devices", $"No Time Change Keys left (plan: {_svc.License.Info.Plan})");
+                Ui.Run(() => Log.Warn("Devices", $"No Time Change Keys left (plan: {_svc.License.Info.Plan})"));
                 return false;
             }
             try
@@ -183,8 +184,7 @@ namespace FarmReel.App.ViewModels
                 if (result.code != 0)
                     backend.Adb.Shell($"date {fmt}"); // non-root fallback
                 backend.Adb.Shell("settings put global auto_time 0");
-                var left = _svc.License.Info.TimeChangeKeysTotal - _svc.License.Info.TimeChangeKeysUsed;
-                Log.Info("Devices", $"Time changed on {row.Name} to {target:yyyy-MM-dd HH:mm} ({hoursOffset:+0}h); keys left: {left}");
+                Log.Info("Devices", $"Time changed on {row.Name} to {target:yyyy-MM-dd HH:mm} ({hoursOffset:+0}h); keys left: {remaining}");
                 return true;
             }
             catch (Exception ex)

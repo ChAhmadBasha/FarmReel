@@ -69,7 +69,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/>
+                        <RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="2Captcha API key:" VerticalAlignment="Center"/>
                     <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CaptchaApiKey}"/>
@@ -85,14 +85,18 @@
                     <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding LicenseKey}"/>
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="License server (optional):" VerticalAlignment="Center"/>
                     <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding LicenseServer}"/>
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="{Binding LicensePlan}" VerticalAlignment="Center" FontWeight="Bold"/>
-                    <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal">
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Update URL (optional):" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding UpdateUrl}"/>
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="{Binding LicensePlan}" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal">
                         <TextBlock Text="Time change keys left: " VerticalAlignment="Center"/>
                         <TextBlock Text="{Binding LicenseKeysLeft}" VerticalAlignment="Center"/>
                         <TextBlock Text=" | Reg Full: " VerticalAlignment="Center"/>
                         <TextBlock Text="{Binding RegFull}" VerticalAlignment="Center"/>
                         <TextBlock Text=" | Novery: " VerticalAlignment="Center"/>
                         <TextBlock Text="{Binding Novery}" VerticalAlignment="Center"/>
+                        <TextBlock Text=" | App version: " VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding CurrentVersion}" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Grid>
             </GroupBox>
@@ -103,6 +107,7 @@
                 <Button Content="Check AI" Click="CheckAi_Click"/>
                 <Button Content="Backup Now" Click="Backup_Click"/>
                 <Button Content="Check Environment" Click="Env_Click"/>
+                <Button Content="Check for Updates" Click="Update_Click"/>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

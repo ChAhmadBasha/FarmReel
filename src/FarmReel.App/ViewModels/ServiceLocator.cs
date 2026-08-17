@@ -30,6 +30,7 @@ namespace FarmReel.App.ViewModels
         public VideoCheckService VideoCheck { get; }
         public BackupService Backup { get; }
         public LicenseService License { get; }
+        public UpdateService Updates { get; }
         public VpnManager Vpn { get; }
         public DeviceManager DeviceManager { get; }
         public FlowRunner Flows { get; }
@@ -72,6 +73,7 @@ namespace FarmReel.App.ViewModels
             VideoCheck = new VideoCheckService(Settings);
             Backup = new BackupService(Settings);
             License = new LicenseService(Settings);
+            Updates = new UpdateService(Settings);
             Vpn = new VpnManager(Settings, Geo);
             DeviceManager = new DeviceManager(Settings, Vpn, Geo);
             Flows = new FlowRunner(DeviceManager, Settings);

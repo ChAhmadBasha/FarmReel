@@ -41,5 +41,21 @@ namespace FarmReel.App.Views
                     "Email OTP", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
+        private async void Stock_Click(object sender, RoutedEventArgs e)
+        {
+            var stock = await _vm.FetchStockAsync();
+            MessageBox.Show(stock.Count == 0 ? "No stock info (check Logs tab / server config)" : string.Join("\n", stock),
+                "Mail stock", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private async void Order_Click(object sender, RoutedEventArgs e)
+        {
+            var count = int.TryParse(InputBox.Ask("How many mail accounts?", "5"), out var c) ? c : 5;
+            var provider = InputBox.Ask("Provider (outlook|gmail|zoho, empty = any)", "outlook");
+            var added = await _vm.OrderStockAsync(count, provider ?? "");
+            MessageBox.Show($"Delivered {added} mail account(s) into the Emails list.",
+                "Order", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }

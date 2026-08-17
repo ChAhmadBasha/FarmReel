@@ -38,6 +38,7 @@
             <TabItem Header="Emails"><views:EmailsView x:Name="EmailsTab"/></TabItem>
             <TabItem Header="Templates"><views:TemplatesView x:Name="TemplatesTab"/></TabItem>
             <TabItem Header="Flows"><views:FlowsView x:Name="FlowsTab"/></TabItem>
+            <TabItem Header="Recorder"><views:RecorderView x:Name="RecorderTab"/></TabItem>
             <TabItem Header="Logs"><views:LogsView x:Name="LogsTab"/></TabItem>
             <TabItem Header="Settings"><views:SettingsView x:Name="SettingsTab"/></TabItem>
         </TabControl>

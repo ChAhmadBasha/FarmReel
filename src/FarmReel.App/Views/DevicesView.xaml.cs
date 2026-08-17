@@ -92,11 +92,11 @@ namespace FarmReel.App.Views
         private void BridgeOn_Click(object sender, RoutedEventArgs e) => _vm.ToggleBridge(Selected, true);
         private void BridgeOff_Click(object sender, RoutedEventArgs e) => _vm.ToggleBridge(Selected, false);
 
-        private void TimeChange_Click(object sender, RoutedEventArgs e)
+        private async void TimeChange_Click(object sender, RoutedEventArgs e)
         {
             if (Selected == null) return;
             var hours = int.TryParse(InputBox.Ask("Hours to shift (e.g. -6 or +12)", "0"), out var h) ? h : 0;
-            _vm.ChangeDeviceTime(Selected, hours);
+            await _vm.ChangeDeviceTimeAsync(Selected, hours);
         }
 
         private async void ClearFb_Click(object sender, RoutedEventArgs e) => await _vm.ClearFbDataAsync(Selected);

@@ -97,6 +97,43 @@ namespace FarmReel.Core.Services
             return true;
         }
 
+        /// <summary>Consume a Time Change Key via the server (hard quota) when a license
+        /// server is configured; otherwise falls back to the local quota ledger.</summary>
+        public async Task<(bool ok, int remaining)> ConsumeTimeChangeKeyAsync()
+        {
+            var server = _settings.LicenseServer;
+            if (!string.IsNullOrEmpty(server))
+            {
+                try
+                {
+                    using var http = new HttpClient { Timeout = TimeSpan.FromSeconds(15) };
+                    var resp = await http.PostAsJsonAsync(server.TrimEnd('/') + "/api/license/consume",
+                        new { key = _info.Key, feature = "timechange" }).ConfigureAwait(false);
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        var body = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        using var doc = JsonDocument.Parse(body);
+                        var root = doc.RootElement;
+                        if (root.TryGetProperty("ok", out var ok) && ok.GetBoolean())
+                        {
+                            if (root.TryGetProperty("used", out var u) && u.TryGetInt32(out var used))
+                                _info.TimeChangeKeysUsed = used;
+                            Save();
+                            return (true, _info.TimeChangeKeysTotal - _info.TimeChangeKeysUsed);
+                        }
+                        if (root.TryGetProperty("error", out var err))
+                            Log.Warn("License", "Server refused key: " + err.GetString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Warn("License", "Server quota unreachable, using local quota: " + ex.Message);
+                }
+            }
+            var okLocal = ConsumeTimeChangeKey();
+            return (okLocal, _info.TimeChangeKeysTotal - _info.TimeChangeKeysUsed);
+        }
+
         public bool CanUseRegFull => _info.RegFullEnabled;
         public bool CanUseNovery => _info.VerifyNoveryEnabled;
     }

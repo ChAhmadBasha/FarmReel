@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmReel.Automation", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmReel.App", "src\FarmReel.App\FarmReel.App.csproj", "{6C9D2E43-B063-4D50-AF5C-3E7F8A9B0D12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmReel.Server", "src\FarmReel.Server\FarmReel.Server.csproj", "{7DA3F054-B174-4D61-AF6D-4E8F9A0B1C23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmReel.Tests", "tests\FarmReel.Tests\FarmReel.Tests.csproj", "{8EB4F065-C285-4E72-B07E-5F9FA0B1C234}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,14 @@ Global
 		{6C9D2E43-B063-4D50-AF5C-3E7F8A9B0D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C9D2E43-B063-4D50-AF5C-3E7F8A9B0D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C9D2E43-B063-4D50-AF5C-3E7F8A9B0D12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DA3F054-B174-4D61-AF6D-4E8F9A0B1C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DA3F054-B174-4D61-AF6D-4E8F9A0B1C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DA3F054-B174-4D61-AF6D-4E8F9A0B1C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DA3F054-B174-4D61-AF6D-4E8F9A0B1C23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EB4F065-C285-4E72-B07E-5F9FA0B1C234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EB4F065-C285-4E72-B07E-5F9FA0B1C234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EB4F065-C285-4E72-B07E-5F9FA0B1C234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EB4F065-C285-4E72-B07E-5F9FA0B1C234}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

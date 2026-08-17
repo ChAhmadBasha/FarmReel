@@ -20,5 +20,30 @@ namespace FarmReel.App.Views
         private async void CheckAi_Click(object sender, RoutedEventArgs e) { if (_vm != null) await _vm.CheckAiAsync(); }
         private void Backup_Click(object sender, RoutedEventArgs e) => _vm?.BackupNow();
         private async void Env_Click(object sender, RoutedEventArgs e) { if (_vm != null) await _vm.CheckEnvironmentAsync(); }
+
+        private async void Update_Click(object sender, RoutedEventArgs e)
+        {
+            if (_vm == null) return;
+            var (available, version, url, sha, notes) = await _vm.CheckForUpdatesAsync();
+            if (!available)
+            {
+                MessageBox.Show($"You are on the latest version ({_vm.CurrentVersion}).",
+                    "Update", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            var ask = MessageBox.Show(
+                $"Update available: {_vm.CurrentVersion} -> {version}\n\n{notes}\n\nDownload and install now?",
+                "Update available", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (ask != MessageBoxResult.Yes) return;
+            var path = await _vm.DownloadUpdateAsync(url, sha);
+            if (string.IsNullOrEmpty(path))
+            {
+                MessageBox.Show("Download failed (see Logs tab).", "Update", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            MessageBox.Show("Update downloaded. The app will close and restart to finish installing.",
+                "Update", MessageBoxButton.OK, MessageBoxImage.Information);
+            _vm.ApplyUpdate(path);
+        }
     }
 }

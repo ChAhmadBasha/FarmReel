@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using FarmReel.Core.Data;
 using FarmReel.Core.Models;
@@ -327,6 +328,81 @@ namespace FarmReel.App.ViewModels
             var code = await _svc.EmailOtp.GetCodeFromAccountAsync(row.Model, receiver, 30).ConfigureAwait(false);
             Ui.Run(() => Log.Info("Emails", $"Code for {receiver}: {(string.IsNullOrEmpty(code) ? "none (timeout)" : code)}"));
             return code;
+        }
+
+        // ---- mail stock storefront (server-backed, farmmails-style) ----
+
+        public async Task<List<string>> FetchStockAsync()
+        {
+            var server = _svc.Settings.LicenseServer;
+            if (string.IsNullOrEmpty(server))
+            {
+                Ui.Run(() => Log.Warn("Emails", "License server not configured - cannot fetch mail stock"));
+                return new List<string>();
+            }
+            try
+            {
+                using var http = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(15) };
+                var url = $"{server.TrimEnd('/')}/api/stock?key={Uri.EscapeDataString(_svc.License.Info.Key)}";
+                var json = await http.GetStringAsync(url).ConfigureAwait(false);
+                using var doc = System.Text.Json.JsonDocument.Parse(json);
+                var lines = new List<string>();
+                if (doc.RootElement.TryGetProperty("stock", out var stock))
+                {
+                    foreach (var s in stock.EnumerateArray())
+                    {
+                        lines.Add($"{s.GetProperty("provider").GetString()} - {s.GetProperty("available").GetInt32()} available @ ${s.GetProperty("price").GetString()}");
+                    }
+                }
+                Ui.Run(() => Log.Info("Emails", "Stock fetched: " + string.Join(" | ", lines)));
+                return lines;
+            }
+            catch (Exception ex)
+            {
+                Ui.Run(() => Log.Error("Emails", "Stock fetch failed: " + ex.Message));
+                return new List<string>();
+            }
+        }
+
+        public async Task<int> OrderStockAsync(int count, string provider)
+        {
+            var server = _svc.Settings.LicenseServer;
+            if (string.IsNullOrEmpty(server)) return 0;
+            try
+            {
+                using var http = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(20) };
+                var resp = await http.PostAsJsonAsync(server.TrimEnd('/') + "/api/stock/order",
+                    new { key = _svc.License.Info.Key, count, provider }).ConfigureAwait(false);
+                if (!resp.IsSuccessStatusCode) return 0;
+                var json = await resp.Content.ReadAsStringAsync().ConfigureAwait(false);
+                using var doc = System.Text.Json.JsonDocument.Parse(json);
+                if (!doc.RootElement.TryGetProperty("accounts", out var accounts)) return 0;
+                var added = 0;
+                foreach (var a in accounts.EnumerateArray())
+                {
+                    var email = a.GetProperty("email").GetString() ?? "";
+                    var password = a.GetProperty("password").GetString() ?? "";
+                    var prov = a.GetProperty("provider").GetString() ?? "outlook";
+                    if (string.IsNullOrEmpty(email)) continue;
+                    _svc.Emails.Save(new Core.Models.EmailAccount
+                    {
+                        Email = email,
+                        PasswordEnc = CredentialVault.Protect(password),
+                        Provider = prov,
+                        IsTrusted = false,
+                        Notes = "From stock"
+                    });
+                    added++;
+                }
+                Ui.Run(() => Log.Info("Emails", $"Ordered {added} mail accounts from stock"));
+                Refresh();
+                return added;
+            }
+            catch (Exception ex)
+            {
+                Ui.Run(() => Log.Error("Emails", "Order failed: " + ex.Message));
+                return 0;
+            }
         }
     }
 

@@ -12,13 +12,15 @@ Facebook bulk-account & page automation suite — a functional clone of **Bob Pr
 
 ## Tech stack
 
-C# 12 / **.NET 8 LTS**, **WPF** desktop app, `Microsoft.Data.Sqlite` (SQLite), MailKit (IMAP OTP), System.Drawing (template matching), DPAPI + AES-GCM (secrets). Three projects:
+C# 12 / **.NET 8 LTS**, **WPF** desktop app, `Microsoft.Data.Sqlite` (SQLite), MailKit (IMAP OTP), System.Drawing (template matching), DPAPI + AES-GCM (secrets). Five projects:
 
 | Project | Purpose |
 |---|---|
-| `src/FarmReel.Core` | Domain models, SQLite data layer, services (scheduler, orchestrator, posting, interaction, email OTP, captcha, SMS, AI, backup, license), FlowScript engine |
-| `src/FarmReel.Automation` | Device backends (LDPlayer/MuMu/real phone via `ldconsole` + ADB), OpenVPN/proxy managers, vision (template match + pluggable OCR), FlowHost + FlowRunner |
-| `src/FarmReel.App` | WPF application (English UI): Dashboard, Devices, Accounts, Pages, Post Table, Active, Groups, Emails, Templates, Logs, Settings |
+| `src/FarmReel.Core` | Domain models, SQLite data layer, services (scheduler, orchestrator, posting, interaction, email OTP, captcha, SMS, AI, backup, license+quotas, **updates**), FlowScript engine |
+| `src/FarmReel.Automation` | Device backends (LDPlayer/MuMu/real phone via `ldconsole` + ADB), OpenVPN/proxy managers, vision (template match + pluggable OCR), FlowHost + FlowRunner + **50 built-in flows** |
+| `src/FarmReel.App` | WPF application (English UI): Dashboard, Devices, Accounts, Pages, Post Table, Active, Groups, Emails (+**mail stock storefront client**), Templates, **Flows (editor)**, **Recorder**, Logs, Settings (+**update check**) |
+| `src/FarmReel.Server` | ASP.NET Core server: license activation, **metered Time Change Key quota**, server-generated device fingerprints, **mail stock API**, **update channel** |
+| `tests/FarmReel.Tests` | xUnit tests: file naming conventions, cron parser, TOTP (RFC 6238), threat classifier, credential vault, repositories, flow engine, template matching |
 
 ## Build & run (Windows)
 
@@ -26,6 +28,34 @@ C# 12 / **.NET 8 LTS**, **WPF** desktop app, `Microsoft.Data.Sqlite` (SQLite), M
 2. `dotnet restore` (pulls MailKit, Microsoft.Data.Sqlite, System.Drawing.Common, ProtectedData).
 3. `dotnet build FarmReel.sln -c Release`
 4. Run `src\FarmReel.App\bin\Release\net8.0-windows\FarmReel.exe` **as Administrator** (needed for LDPlayer window arrangement, OpenVPN and DPAPI).
+
+## Tests
+
+```bash
+dotnet test tests/FarmReel.Tests -c Release
+```
+
+## Server
+
+```bash
+dotnet run --project src/FarmReel.Server
+```
+
+License activation, Time Change Key quota enforcement, device-info generation, the
+mail-stock storefront and the update channel. See `src/FarmReel.Server/README.md`.
+Point the app's **Settings → License server** at it; without a server the app runs
+fully offline with local quotas.
+
+## Release build / installer
+
+```powershell
+powershell -ExecutionPolicy Bypass -File publish\publish.ps1
+```
+
+Produces a single-file self-contained `FarmReel.exe` in `publish\win-x64` and (with
+Inno Setup 6 installed) `FarmReelSetup-1.0.0.exe`. Code signing is optional and
+enabled via `$env:CERT_THUMBPRINT` + `-Sign`. To stage an update, drop the new
+`FarmReel.exe` into the server's `update-files/` folder.
 
 ## Quick start
 

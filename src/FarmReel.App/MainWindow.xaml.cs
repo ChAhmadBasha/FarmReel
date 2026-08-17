@@ -23,6 +23,7 @@ namespace FarmReel.App
             EmailsTab.ViewModel = new EmailsViewModel(svc);
             TemplatesTab.ViewModel = PostsTab.ViewModel; // shared template store
             FlowsTab.ViewModel = new FlowsViewModel(svc);
+            RecorderTab.ViewModel = new RecorderViewModel(svc);
             LogsTab.ViewModel = new LogsViewModel(svc);
             SettingsTab.ViewModel = new SettingsViewModel(svc);
             DataContext = Main;

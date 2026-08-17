@@ -2,6 +2,7 @@
 bin/
 obj/
 dist/
+publish/
 *.user
 *.suo
 
@@ -12,6 +13,7 @@ dist/
 *.log
 *.ovpn
 *.apk
+*.pfx
 
 # IDE
 .vs/

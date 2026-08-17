@@ -45,6 +45,8 @@ namespace FarmReel.App.ViewModels
         public string AiModel { get => _svc.Settings.AiModel; set { _svc.Settings.AiModel = value; OnPropertyChanged(); } }
         public string LicenseKey { get => _svc.Settings.LicenseKey; set { _svc.Settings.LicenseKey = value; OnPropertyChanged(); } }
         public string LicenseServer { get => _svc.Settings.LicenseServer; set { _svc.Settings.LicenseServer = value; OnPropertyChanged(); } }
+        public string UpdateUrl { get => _svc.Settings.Get("update_url", ""); set { _svc.Settings.Set("update_url", value); OnPropertyChanged(); } }
+        public string CurrentVersion => FarmReel.Core.Utils.VersionInfo.Version;
         public string LicensePlan => _svc.License.Info.Plan;
         public string LicenseKeysLeft => $"{_svc.License.Info.TimeChangeKeysTotal - _svc.License.Info.TimeChangeKeysUsed}/{_svc.License.Info.TimeChangeKeysTotal}";
         public string RegFull => _svc.License.CanUseRegFull ? "Enabled" : "Disabled";
@@ -66,6 +68,7 @@ namespace FarmReel.App.ViewModels
             _svc.Settings.Set("ai_model", AiModel);
             _svc.Settings.Set("license_key", LicenseKey);
             _svc.Settings.Set("license_server", LicenseServer);
+            _svc.Settings.Set("update_url", UpdateUrl);
             _svc.Settings.Set("auto_stop_at", AutoStopAt);
             _svc.Settings.Set("instagram_package", InstagramPackage);
             _svc.Settings.SetBool("skip_offline_devices", SkipOfflineDevices);
@@ -92,6 +95,21 @@ namespace FarmReel.App.ViewModels
         {
             var ok = await _svc.Ai.CheckHealthAsync().ConfigureAwait(false);
             Ui.Run(() => Log.Info("AI", ok ? "AI connection OK" : "AI connection FAILED"));
+        }
+
+        public async Task<(bool available, string version, string url, string sha256, string notes)> CheckForUpdatesAsync()
+        {
+            return await _svc.Updates.CheckAsync().ConfigureAwait(false);
+        }
+
+        public async Task<string> DownloadUpdateAsync(string url, string sha256)
+        {
+            return await _svc.Updates.DownloadAsync(url, sha256).ConfigureAwait(false);
+        }
+
+        public void ApplyUpdate(string path)
+        {
+            _svc.Updates.Apply(path);
         }
 
         public void BackupNow()
